@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-4 d-flex" style="gap: 10px;">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      Home
+                    </label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                      PG/Hostel
+                    </label>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-8 input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search landmark...">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Search</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3 row">
+                    <label for="typeahead-focus">Search for a city:</label>
+                    <input style=""
+                        id="typeahead-focus"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="model"
+                        [ngbTypeahead]="search"
+                        (focus)="focus$.next($any($event).target.value)"
+                        (click)="click$.next($any($event).target.value)"
+                        #instance="ngbTypeahead"
+                    />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="tenantType">For</label>
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-secondary" id="dropdownButton" ngbDropdownToggle>
+                          {{ selectedValue ? selectedValue : 'Select a value' }}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownButton">
+                            <button class="dropdown-item" *ngFor="let value of dropdownValues" (click)="selectValue(value)">{{ value }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="roomType">Select Room Sharing type</label>
+                <div ngbDropdown class="d-inline-block">
+                    <button class="btn btn-outline-secondary" id="dropdownButton" ngbDropdownToggle>
+                      {{ selectedValue2 ? selectedValue : 'Select a value' }}
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownButton">
+                        <button class="dropdown-item" *ngFor="let value of dropdownValues2" (click)="selectValue2(value)">{{ value }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

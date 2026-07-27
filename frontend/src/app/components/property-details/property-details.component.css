@@ -1,0 +1,7 @@
+ul > li {
+    display: inline-block;
+    /* You can also add some margins here to make it look prettier */
+}
+ul {
+    display: flex;
+}
