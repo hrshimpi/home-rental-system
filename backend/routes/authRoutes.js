@@ -1,5 +1,7 @@
 const Router = require('express');
 const router = Router();
+const path = require('path');
+const fs = require('fs');
 const authController = require('../controllers/authController');
 const ownerController = require('../controllers/ownerController');
 const tenantController = require('../controllers/tenantController');
@@ -14,9 +16,14 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
+const uploadDir = path.join(__dirname, '..', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null,'../uploads');
+        cb(null, uploadDir);
     },
     filename: function(req, file, cb) {
         cb(null, file.originalname);
@@ -25,7 +32,7 @@ var storage = multer.diskStorage({
 
 const upload = multer({
     storage:storage,
-    fileFiletr:fileFilter,
+    fileFilter:fileFilter,
 })
 
 
