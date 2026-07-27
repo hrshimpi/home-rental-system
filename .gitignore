@@ -1,0 +1,11 @@
+# OS / editor / tooling cruft
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.claude/
+
+# Safety net (each app also has its own .gitignore)
+node_modules/
+.env
+dist/
