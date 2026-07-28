@@ -1,24 +1,35 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const Property = require('../models/property')
 const shared = require('../shared/shared');
 
+// Precomputed once at module load (not per-request) so a login attempt
+// against a nonexistent email still pays the same bcrypt.compare cost
+// as one against a real user - otherwise response time alone leaks
+// which emails are registered.
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync('dummy-password-for-timing-safety', 12);
+
 module.exports.login = async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await User.findOne({ 
-            $and:[  
-                { "email":email }, 
-                { "password":password }
-            ] 
-        });
-        if(user) {
-            const token = shared.generateToken(user._id, user.role);
-            res.status(200).json({jwt:token});
-        } else {
-            res.status(404).send({message:"Wrong credentials"});
-            console.log("user not found");
+        const user = await User.findOne({ "email":email }).select('+password');
+
+        if (!user) {
+            // Run a dummy compare so this branch takes as long as the
+            // real one below - keeps response time from revealing
+            // whether the email is registered.
+            await bcrypt.compare(password, DUMMY_PASSWORD_HASH);
+            return res.status(401).send({message:"Invalid email or password"});
         }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).send({message:"Invalid email or password"});
+        }
+
+        const token = shared.generateToken(user._id, user.role);
+        res.status(200).json({jwt:token});
     } catch (error) {
         res.status(404).send(error.message);
     }
@@ -27,8 +38,9 @@ module.exports.login = async (req, res) => {
 module.exports.signUp = async (req, res) => {
     const { role,name,email,password,mobile } = req.body;
     try {
+        const hashedPassword = await bcrypt.hash(password, 12);
         const user = await User.create({
-            role, name, email, password, mobile
+            role, name, email, password:hashedPassword, mobile
         });
         res.status(201).send({message:"Signup Successful!"});
     } catch (error) {
@@ -37,7 +49,7 @@ module.exports.signUp = async (req, res) => {
                 error.message = 'This email is already registered, please login!';
             }
         }
-        res.status(400).send(error.message);      
+        res.status(400).send(error.message);
     }
 }
 

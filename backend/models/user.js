@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true,
+        select:false,
     },
     mobile:{
         type:Number,
@@ -25,9 +26,19 @@ const UserSchema = new mongoose.Schema({
         enum:['tenant','owner']
     },
     // notification:{
-        
+
     // }
 })
+
+// Second layer of defense: even if a query explicitly re-selects the
+// password (e.g. login's .select('+password')), it never leaks through
+// serialization (res.json / JSON.stringify).
+UserSchema.set('toJSON', {
+    transform: (doc, ret) => {
+        delete ret.password;
+        return ret;
+    }
+});
 
 const User = mongoose.model('user', UserSchema);
 
