@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
-const AUTH_API = 'http://localhost:3001/';
+const AUTH_API = environment.apiBaseUrl;
 const httpOptions = {
   // reportProgress:true, 
   // observe:'event',

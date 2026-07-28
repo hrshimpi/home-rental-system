@@ -34,7 +34,7 @@ export class LoginComponent {
         data => {
           this.authService.handleLoginSuccess();
           console.log("login working")
-          sessionStorage.setItem('jwt', data.jwt );
+          this.authService.setToken(data.jwt);
           this.isLoginFailed = false;
           this.isSuccessful = true;
 

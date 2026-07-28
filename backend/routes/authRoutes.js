@@ -5,6 +5,7 @@ const fs = require('fs');
 const authController = require('../controllers/authController');
 const ownerController = require('../controllers/ownerController');
 const tenantController = require('../controllers/tenantController');
+const { verifyToken } = require('../shared/authMiddleware');
 
 const multer = require('multer');
 
@@ -47,11 +48,11 @@ router.get('/profile/:id', authController.getUserData);
 
 //owner
 // add/list property form
-router.post('/addProperty/:id', upload.array("photos") ,ownerController.addProperty);
+router.post('/addProperty/:id', verifyToken, upload.array("photos") ,ownerController.addProperty);
 
 // edit property / delete property
-router.get('/editProperty/:id',authController.getProperty);
-router.post('/editProperty/:id',ownerController.editProperty);
+router.get('/editProperty/:id', verifyToken, authController.getProperty);
+router.post('/editProperty/:id', verifyToken, ownerController.editProperty);
 
 // list of his propety(table or card)
 router.get('/myProperties/:id', ownerController.getOwnersProperties);
@@ -67,7 +68,7 @@ router.get('/allProperties', authController.getAllProperties);
 
 //reviews
 router.get('/reviews/:id', tenantController.getAllReviewByID);
-router.post('/addReview', tenantController.addReview);
+router.post('/addReview', verifyToken, tenantController.addReview);
 // all chats
 // notifications
 
