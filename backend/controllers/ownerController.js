@@ -29,9 +29,12 @@ module.exports.addProperty = async (req, res) => {
 module.exports.editProperty = async (req, res) => {
     const p_id = req.params.id;
     try {
-        const property = await TextTrackList.findById(p_id);
+        const property = await Property.findById(p_id);
         if(property === null){
             return res.status(400).send({message:"property does not exists!"});
+        }
+        if(req.user.id !== property.owner_id.toString()){
+            return res.status(403).send({message:"You are not allowed to edit this property!"});
         }
         if(req.body.name !== null){
             property.name = req.body.name;
