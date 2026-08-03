@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const chatRoutes = require('./routes/chatRoutes');
@@ -18,6 +19,11 @@ var corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+// Uploaded property photos were saved to disk but never actually
+// served - there was no static route for them at all, so every photo
+// URL the API returned 404'd. addProperty's photos never worked end
+// to end without this.
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.set("strictQuery", false);
 

@@ -29,10 +29,10 @@ export class OwnerService {
   o_id:string = this.authService.getId().id;
 
   addProperty(
-    name:string, propertType:string, rent:number, deposite:number, 
+    name:string, propertType:string, rent:number, deposite:number,
     address:string, landmark:string, tenantType:string,
     desc:string, roomAmenities:Array<any>, roomType:Array<any>, rules:Array<any>,
-    photos:any
+    photos:File[]
   ):Observable<any>{
 
 
@@ -48,7 +48,12 @@ export class OwnerService {
     formData.append('roomAmenities',JSON.stringify(roomAmenities))
     formData.append('roomType',JSON.stringify(roomType))
     formData.append('rules',JSON.stringify(rules))
-    formData.append('photos', photos);
+    // formData.append('photos', photos) with photos as an array used to
+    // serialize as the literal string "[object File]" per file -
+    // browsers don't expand arrays into FormData. Append each file
+    // separately under the same field name instead, which is what
+    // multer.array('photos') on the backend actually expects.
+    photos.forEach((file) => formData.append('photos', file));
 
 //ngx-file-drop
     return this.http.post(AUTH_API + 'addProperty/' + this.o_id,
