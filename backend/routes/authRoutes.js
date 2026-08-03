@@ -5,19 +5,28 @@ const ownerController = require('../controllers/ownerController');
 const tenantController = require('../controllers/tenantController');
 const { verifyToken } = require('../shared/authMiddleware');
 const { upload, validateUploadedImages } = require('../shared/upload');
+const { validate, signUpSchema, loginSchema, addPropertySchema, addReviewSchema } = require('../shared/validation');
+const { loginRateLimiter, signUpRateLimiter } = require('../shared/rateLimit');
 
 //landing page
 //contact us page
 //
 //user login
-router.post('/login', authController.login);
-router.post('/signUp', authController.signUp);
+router.post('/login', loginRateLimiter, validate(loginSchema, { redactFields: ['password'] }), authController.login);
+router.post('/signUp', signUpRateLimiter, validate(signUpSchema, { redactFields: ['password'] }), authController.signUp);
 
 router.get('/profile/:id', authController.getUserData);
 
 //owner
 // add/list property form
-router.post('/addProperty/:id', verifyToken, upload.array("photos"), validateUploadedImages, ownerController.addProperty);
+router.post(
+    '/addProperty/:id',
+    verifyToken,
+    upload.array("photos"),
+    validate(addPropertySchema),
+    validateUploadedImages,
+    ownerController.addProperty
+);
 
 // edit property / delete property
 router.get('/editProperty/:id', verifyToken, authController.getProperty);
@@ -37,7 +46,7 @@ router.get('/allProperties', authController.getAllProperties);
 
 //reviews
 router.get('/reviews/:id', tenantController.getAllReviewByID);
-router.post('/addReview', verifyToken, tenantController.addReview);
+router.post('/addReview', verifyToken, validate(addReviewSchema), tenantController.addReview);
 // all chats
 // notifications
 

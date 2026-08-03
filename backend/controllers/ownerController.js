@@ -3,10 +3,16 @@ const Property = require('../models/property');
 
 module.exports.addProperty = async (req, res) => {
     const owner_id = req.params.id;
+    // roomAmenities/roomType/rules arrive here already parsed into real
+    // arrays - the route's validate(addPropertySchema) middleware does
+    // the JSON.parse (and validates the result) before this controller
+    // ever runs. Re-parsing an already-parsed array here used to throw
+    // ("[Wifi].toString()" -> "Wifi" -> not valid JSON).
     const {
         name, desc, rent, address, landmark,
-        deposite, propertyType,
-        tenantType } = req.body;
+        deposite, propertyType, tenantType,
+        roomAmenities, roomType, rules,
+    } = req.body;
 
     // Uploaded files arrive via multer as req.files, not req.body -
     // 'photos' was never a plain form field, so req.body.photos was
@@ -14,23 +20,10 @@ module.exports.addProperty = async (req, res) => {
     const photos = (req.files || []).map((file) => `/uploads/${file.filename}`);
 
     try {
-        // These used to run before the try block: a malformed (or
-        // missing) roomAmenities/roomType/rules field threw a
-        // synchronous SyntaxError inside an async function with
-        // nothing to catch the resulting rejected promise - Express 4
-        // doesn't handle that, so Node treated it as an unhandled
-        // rejection and killed the whole process, not just the
-        // request. (Day 4's zod validation replaces this ad-hoc
-        // parsing entirely; this is the minimal fix to stop a single
-        // bad request from taking the server down in the meantime.)
-        const roomAmenities = JSON.parse(req.body.roomAmenities);
-        const roomType = JSON.parse(req.body.roomType);
-        const rules = JSON.parse(req.body.rules);
-
         const property = await Property.create({
             owner_id, name, desc, rent, address, landmark,
-            deposite, roomAmenities:roomAmenities, propertyType,
-            tenantType, roomType:roomType, rules:rules, photos
+            deposite, roomAmenities, propertyType,
+            tenantType, roomType, rules, photos
         })
         res.status(201).send({message:"Property Added!", property:property});
     } catch (error) {

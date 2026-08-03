@@ -76,6 +76,7 @@ Open `http://localhost:4200`, sign up as an **owner** or **tenant**, and go.
 | `PORT` | No (defaults to `3001`) | API port |
 | `MONGODB_URI` | **Yes** | Mongo connection string |
 | `JWT_SECRET` | **Yes** | Signs/verifies auth tokens — use a long random value |
+| `ALLOWED_ORIGINS` | No (defaults to the local dev origins) | Comma-separated list of origins allowed by CORS |
 
 ---
 
