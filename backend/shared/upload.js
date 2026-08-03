@@ -52,7 +52,13 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({
+    storage,
+    fileFilter,
+    // A malicious or buggy client shouldn't be able to exhaust disk
+    // or memory with an unbounded upload.
+    limits: { fileSize: 5 * 1024 * 1024, files: 10 },
+});
 
 // Authoritative image-type check: reads each uploaded file's magic
 // bytes (not the filename extension, not the client-supplied
