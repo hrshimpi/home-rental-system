@@ -1,41 +1,10 @@
 const Router = require('express');
 const router = Router();
-const path = require('path');
-const fs = require('fs');
 const authController = require('../controllers/authController');
 const ownerController = require('../controllers/ownerController');
 const tenantController = require('../controllers/tenantController');
 const { verifyToken } = require('../shared/authMiddleware');
-
-const multer = require('multer');
-
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-        cb(null, true);
-    }else{
-        cb(new Error('Invalid file type'), false);
-    }
-}
-
-const uploadDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, uploadDir);
-    },
-    filename: function(req, file, cb) {
-        cb(null, file.originalname);
-    }
-})
-
-const upload = multer({
-    storage:storage,
-    fileFilter:fileFilter,
-})
-
+const { upload, validateUploadedImages } = require('../shared/upload');
 
 //landing page
 //contact us page
@@ -48,7 +17,7 @@ router.get('/profile/:id', authController.getUserData);
 
 //owner
 // add/list property form
-router.post('/addProperty/:id', verifyToken, upload.array("photos") ,ownerController.addProperty);
+router.post('/addProperty/:id', verifyToken, upload.array("photos"), validateUploadedImages, ownerController.addProperty);
 
 // edit property / delete property
 router.get('/editProperty/:id', verifyToken, authController.getProperty);
