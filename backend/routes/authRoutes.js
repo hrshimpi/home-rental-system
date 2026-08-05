@@ -3,7 +3,7 @@ const router = Router();
 const authController = require('../controllers/authController');
 const ownerController = require('../controllers/ownerController');
 const tenantController = require('../controllers/tenantController');
-const { verifyToken } = require('../shared/authMiddleware');
+const { verifyToken, requireRole } = require('../shared/authMiddleware');
 const { upload, validateUploadedImages } = require('../shared/upload');
 const { validate, signUpSchema, loginSchema, addPropertySchema, addReviewSchema } = require('../shared/validation');
 const { loginRateLimiter, signUpRateLimiter } = require('../shared/rateLimit');
@@ -22,6 +22,7 @@ router.get('/profile/:id', authController.getUserData);
 router.post(
     '/addProperty/:id',
     verifyToken,
+    requireRole('owner'),
     upload.array("photos"),
     validate(addPropertySchema),
     validateUploadedImages,

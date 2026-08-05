@@ -27,6 +27,15 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['Chrome'],
+    // Used by `npm run test:ci` (see package.json / the CI workflow) -
+    // CI containers commonly run as root, and Chrome refuses to launch
+    // sandboxed as root without this flag.
+    customLaunchers: {
+      ChromeHeadlessCI: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu'],
+      },
+    },
     singleRun: false,
     restartOnFileChange: true,
   });

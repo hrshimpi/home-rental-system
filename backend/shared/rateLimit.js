@@ -8,7 +8,11 @@ const rateLimit = require('express-rate-limit');
 // free.
 const makeAuthRateLimiter = () => rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 5,
+    // A real test run legitimately makes far more than 5 login/signUp
+    // calls across its test cases - NODE_ENV=test is never set outside
+    // local/CI test runs (Jest sets it by default), so this doesn't
+    // weaken the real 5/15min production limit.
+    max: process.env.NODE_ENV === 'test' ? 1000 : 5,
     standardHeaders: false,
     legacyHeaders: false,
     handler: (req, res) => {
