@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Subscription, interval, switchMap } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription, interval } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 
@@ -9,7 +9,7 @@ import { ChatService } from 'src/app/services/chat.service';
     styleUrls: ['./my-chats.component.css'],
     standalone: false
 })
-export class MyChatsComponent implements OnInit{
+export class MyChatsComponent implements OnInit, OnDestroy {
   
   @ViewChild('container', { static: false }) containerRef!: ElementRef;
 
@@ -103,8 +103,7 @@ export class MyChatsComponent implements OnInit{
     const pollingInterval = 3000; // Polling interval in milliseconds (adjust as needed)
   
     this.subscription = interval(pollingInterval)
-      .subscribe((messages: any) => {
-        // Handle the retrieved messages and update the chat interface
+      .subscribe(() => {
         this.chatService.refreshChats.emit();
       });
   }

@@ -32,7 +32,7 @@ export class SignUpComponent {
     this.authService
       .signUp(email,password,uname,mobile,role)
       .subscribe(
-        data => {
+        () => {
           this.authService.handleSignupSuccess();
           console.log("signUp working")
           this.isSignUpFailed = false;

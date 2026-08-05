@@ -49,8 +49,12 @@
                 <div class="row">
                   <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                     <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                      <!-- Decorative placeholder, not the actual property's
+                           photo - see DEV_NOTES known issue: property.photos
+                           isn't wired up to any UI yet. alt="" marks this
+                           correctly as decorative for screen readers. -->
                       <img src="../../../assets/h2.jpg"
-                        class="w-100" />
+                        class="w-100" alt="" />
                       <a href="#!">
                         <div class="hover-overlay">
                           <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
@@ -58,7 +62,7 @@
                       </a>
                     </div>
                   </div>
-                  <div class="col-md-6 col-lg-6 col-xl-6" (click)="navigate(item._id)">   <!-- click function to navigate to detail page -->
+                  <div class="col-md-6 col-lg-6 col-xl-6" (click)="navigate(item._id)" (keyup.enter)="navigate(item._id)" tabindex="0" role="button">   <!-- click function to navigate to detail page -->
                     <h5>{{ item.name}}PG</h5>
                     <!-- <div class="d-flex flex-row">
                     <span>Available rooms</span>

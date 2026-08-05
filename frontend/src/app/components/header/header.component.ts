@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({

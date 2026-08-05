@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalDismissReasons, NgbCarouselConfig, NgbModal, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { NgbCarouselConfig, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { OwnerService } from 'src/app/services/owner.service';
