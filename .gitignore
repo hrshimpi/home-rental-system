@@ -9,3 +9,6 @@ Thumbs.db
 node_modules/
 .env
 dist/
+
+# Internal dev notes - not meant for the public repo
+DEV_NOTES.md
