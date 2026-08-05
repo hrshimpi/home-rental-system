@@ -1,0 +1,65 @@
+.filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.tenant-type-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.field-label {
+    font-size: 0.9rem;
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.property-card {
+    margin-bottom: 16px;
+}
+
+.property-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.thumb {
+    flex: 1 1 200px;
+}
+
+.thumb img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.property-main {
+    flex: 2 1 300px;
+    cursor: pointer;
+}
+
+.address {
+    color: var(--mat-sys-on-surface-variant);
+}
+
+.property-side {
+    flex: 1 1 200px;
+    border-left: 1px solid var(--mat-sys-outline-variant);
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.available-from {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

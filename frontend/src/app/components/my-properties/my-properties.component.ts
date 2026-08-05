@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/services/auth.service';
 import { OwnerService } from 'src/app/services/owner.service';
+import { OwnerContactDialogComponent } from '../owner-contact-dialog/owner-contact-dialog.component';
 
 @Component({
     selector: 'app-my-properties',
@@ -13,7 +14,6 @@ import { OwnerService } from 'src/app/services/owner.service';
 export class MyPropertiesComponent implements OnInit {
 
   properties:any[] = [];
-  closeResult = '';
   filterTerm!: string;
   roomTypeFilterTerm!:string;
   tenantTypeFilterTerm!:string;
@@ -21,7 +21,7 @@ export class MyPropertiesComponent implements OnInit {
     private ownerService: OwnerService,
     private authService: AuthService,
     private router: Router,
-    private modalService: NgbModal
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -37,27 +37,10 @@ export class MyPropertiesComponent implements OnInit {
   }
 
   navigate(id:string){
-    this.router.navigate(['/propertyDetails', id ]);  
+    this.router.navigate(['/propertyDetails', id ]);
   }
 
-  open(content:any) {
-		this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-			(result) => {
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) => {
-				this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-			},
-		);
-	}
-
-  private getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	}
+  openOwnerContactDialog(): void {
+    this.dialog.open(OwnerContactDialogComponent);
+  }
 }

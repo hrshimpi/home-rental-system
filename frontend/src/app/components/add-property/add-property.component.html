@@ -1,133 +1,132 @@
-<div class="container">
-  <div class="row" >
-    <form
-      name="addp"
-      [formGroup]="myForm"
-      (ngSubmit)="onSubmit()" style="display: flex; flex-direction:column; justify-content: center; align-items: center;"
-      >
-      <h1 class="p-4" >Add porperty details</h1>
-      <div>
-        Provide the details about your place to find a tenant soon
+<div class="page">
+  <form
+    name="addp"
+    [formGroup]="myForm"
+    (ngSubmit)="onSubmit()"
+    class="add-property-form"
+    >
+    <h1>Add porperty details</h1>
+    <div>
+      Provide the details about your place to find a tenant soon
+    </div>
+    <div id="step1" [hidden]="currentStep !== 1" class="step">
+      <div class="field-group">
+        <span class="field-label">Select Property Type</span>
+        <mat-radio-group formControlName="propertyType">
+          <mat-radio-button value="home">Home</mat-radio-button>
+          <mat-radio-button value="pg">PG/Hostel</mat-radio-button>
+        </mat-radio-group>
       </div>
-      <div id="step1" [hidden]="currentStep !== 1" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
-        <div class="form-group m-3">
-          <span class="form-label mx-2">Select Property Type</span><br>
-          <input type="radio" name="propertyType" value="home" formControlName="propertyType">
-          <label for="" class="mx-2">Home</label>
-          <input type="radio" name="propertyType" value="pg" formControlName="propertyType">
-          <label for="">PG/Hostel</label>
-        </div>
-        <div class="form-group col-md-4 m-3">
-          <label for="name" class="form-label">Enter Name</label>
-          <input type="text" class="form-control" name="name" formControlName="name">
-        </div>
-        <div class="form-group m-3">
-          <label for="" class="form-label">
-            Select the type of rooms available in your PG
-          </label>
-          <div style="display: flex; flex-direction: row; gap: 10px;">
-            @for (option of options; track option; let i = $index) {
-              <div >
-                <input type="checkbox" [value]="option.value" (change)="onCheckboxChange($event)">
-                {{option.name}}
-              </div>
-            }
-          </div>
-        </div>
-        <div class="form-group col-md-4 m-3">
-          <label for="rent" class="form-label">Rent for one person</label>
-          <input type="number" class="form-control" name="rent" formControlName="rent">
-        </div>
-        <div class="form-group col-md-4 m-3">
-          <label for="deposite" class="form-label">Deposite </label>
-          <input type="number" class="form-control" name="deposite" formControlName="deposite">
-        </div>
-        <div class="form-group col-md-4 m-3">
-          <label for="" class="form-label">
-            Room Amenities
-          </label>
-          <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
-            @for (option of roomAmenities; track option; let i = $index) {
-              <div>
-                <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeA($event)">
-                {{option.name}}
-              </div>
-            }
-          </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Enter Name</mat-label>
+        <input matInput type="text" name="name" formControlName="name">
+      </mat-form-field>
+
+      <div class="field-group">
+        <span class="field-label">Select the type of rooms available in your PG</span>
+        <div class="checkbox-row">
+          @for (option of options; track option; let i = $index) {
+            <label class="checkbox-item">
+              <input type="checkbox" [value]="option.value" (change)="onCheckboxChange($event)">
+              {{option.name}}
+            </label>
+          }
         </div>
       </div>
 
-      <div id="step2" [hidden]="currentStep !== 2" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
-        <div class="form-group col-md-6 m-3">
-          <label for="address" class="form-label">Enter Address</label>
-          <input type="text" class="form-control" name="address" formControlName="address">
+      <mat-form-field appearance="outline">
+        <mat-label>Rent for one person</mat-label>
+        <input matInput type="number" name="rent" formControlName="rent">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Deposite</mat-label>
+        <input matInput type="number" name="deposite" formControlName="deposite">
+      </mat-form-field>
+
+      <div class="field-group">
+        <span class="field-label">Room Amenities</span>
+        <div class="checkbox-row">
+          @for (option of roomAmenities; track option; let i = $index) {
+            <label class="checkbox-item">
+              <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeA($event)">
+              {{option.name}}
+            </label>
+          }
         </div>
-        <div class="form-group col-md-6 m-3">
-          <label for="landmark" class="form-label">Enter landmark</label>
-          <input type="text" class="form-control" name="address" formControlName="landmark">
-        </div>
-        <div class="form-group col-md-6 m-3">
-          <label for="" class="form-label">Place is available for</label><br>
-          <input type="radio" class="m-3" name="tenantType" value="male" formControlName="tenantType">
-          <label for="">Male</label>
-          <input type="radio" class="m-3" name="tenantType" value="female" formControlName="tenantType">
-          <label for="">Female</label>
-          <input type="radio" class="m-3" name="tenantType" value="anyone" formControlName="tenantType">
-          <label for="">Anyone</label>
-        </div>
-        <div class="form-group col-md-6 m-3">
-          <label for="" class="form-label">
-            PG rules
-          </label>
-          <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
-            @for (option of rules; track option; let i = $index) {
-              <div>
-                <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeR($event)">
-                {{option.name}}
-              </div>
-            }
-          </div>
-        </div>
-        <div class="form-group col-md-6 m-3">
-          <label for="desc" class="form-label">Enter description</label>
-          <input type="text" class="form-control" name="desc" formControlName="desc">
+      </div>
+    </div>
+
+    <div id="step2" [hidden]="currentStep !== 2" class="step">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter Address</mat-label>
+        <input matInput type="text" name="address" formControlName="address">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Enter landmark</mat-label>
+        <input matInput type="text" name="landmark" formControlName="landmark">
+      </mat-form-field>
+
+      <div class="field-group">
+        <span class="field-label">Place is available for</span>
+        <mat-radio-group formControlName="tenantType">
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+          <mat-radio-button value="anyone">Anyone</mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">PG rules</span>
+        <div class="checkbox-row">
+          @for (option of rules; track option; let i = $index) {
+            <label class="checkbox-item">
+              <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeR($event)">
+              {{option.name}}
+            </label>
+          }
         </div>
       </div>
 
-      <div id="step3" [hidden]="currentStep !== 3" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter description</mat-label>
+        <input matInput type="text" name="desc" formControlName="desc">
+      </mat-form-field>
+    </div>
 
-        <div class="center">
-          <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
-            (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-              Optional custom content that replaces the the entire default content.
-              <button type="button" (click)="openFileSelector()">Browse Files</button>
-            </ng-template>
-          </ngx-file-drop>
-          <div class="upload-table">
-            <table class="table">
-              <thead>
+    <div id="step3" [hidden]="currentStep !== 3" class="step">
+      <div class="center">
+        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+          (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+          <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            Optional custom content that replaces the the entire default content.
+            <button type="button" mat-stroked-button (click)="openFileSelector()">Browse Files</button>
+          </ng-template>
+        </ngx-file-drop>
+        <div class="upload-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of files; track item; let i = $index) {
                 <tr>
-                  <th>Name</th>
+                  <td><strong>{{ item.relativePath }}</strong></td>
                 </tr>
-              </thead>
-              <tbody class="upload-name-style">
-                @for (item of files; track item; let i = $index) {
-                  <tr>
-                    <td><strong>{{ item.relativePath }}</strong></td>
-                  </tr>
-                }
-              </tbody>
-            </table>
-          </div>
+              }
+            </tbody>
+          </table>
         </div>
-
       </div>
-      <div style="display: flex;">
-        <button type="button" class="btn btn-primary float-start m-4" (click)="prevStep()" [hidden]="currentStep === 1">Previous</button>
-        <button type="button" class="btn btn-primary float-end m-4" (click)="nextStep()" [hidden]="currentStep === 3">Next</button>
-        <button type="submit" class="btn btn-success float-end m-4" [hidden]="currentStep !== 3">Submit</button>
-      </div>
-    </form>
-  </div>
+    </div>
+    <div class="step-actions">
+      <button type="button" mat-stroked-button (click)="prevStep()" [hidden]="currentStep === 1">Previous</button>
+      <button type="button" mat-stroked-button (click)="nextStep()" [hidden]="currentStep === 3">Next</button>
+      <button type="submit" mat-flat-button [hidden]="currentStep !== 3">Submit</button>
+    </div>
+  </form>
 </div>

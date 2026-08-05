@@ -1,6 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { NgbDropdownConfig, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, filter, map, merge } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-landing-page',
@@ -9,10 +7,6 @@ import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChang
     standalone: false
 })
 export class LandingPageComponent {
-
-  constructor(config: NgbDropdownConfig) {
-    config.autoClose = 'outside';
-  }
 
   cities:any =[
     'Ahmadnagar',
@@ -52,34 +46,19 @@ export class LandingPageComponent {
     'Wardha',
     'Yavatmal',
   ]
-  model: any;
-  @ViewChild('instance', { static: true }) instance!: NgbTypeahead;
-	focus$ = new Subject<string>();
-	click$ = new Subject<string>();
+  model = '';
+  filteredCities: string[] = this.cities;
 
-	search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) => {
-		const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-		const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-		const inputFocus$ = this.focus$;
-
-		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
-			map((term: string) =>
-				(term === '' ? this.cities : this.cities.filter((v: string) => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
-			),
-		);
-	};
+  filterCities(): void {
+    const term = (this.model || '').toLowerCase();
+    this.filteredCities = term
+      ? this.cities.filter((city: string) => city.toLowerCase().includes(term))
+      : this.cities;
+  }
 
   dropdownValues: string[] = ['Anyone', 'Male', 'Female'];
   selectedValue!: string;
 
   dropdownValues2: string[] = ['One', 'Two', 'three','Four'];
   selectedValue2!: string;
-
-  selectValue(value: string): void {
-    this.selectedValue = value;
-  }
-
-  selectValue2(value: string): void {
-    this.selectedValue2 = value;
-  }
 }

@@ -1,196 +1,136 @@
-<div class="container">
-  <h1 class="border-bottom ">Property</h1>
-  <section >
-    <div class="row my-3 mx-1">
-      <div class="h4 pb-2 mb-4 border-bottom border-dark">
-        {{ property.name }}
-      </div>
-      <div class="card rounded-0">
-        <div class="card-body">
-          <h5 class="card-title">Address</h5>
-          <p class="card-text">{{ property.address }}</p>
-          <p class="card-text text-dak-subtle">Near {{ property.landmark }}</p>
+<div class="page">
+  <h1>Property</h1>
+  <mat-card>
+    <mat-card-content>
+      <h2>{{ property.name }}</h2>
+    </mat-card-content>
+  </mat-card>
 
-          <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+  <div class="details-row">
+    <div class="carousel">
+      @if (images.length) {
+        <div class="carousel-frame">
+          <img [src]="images[currentImageIndex].src" alt="">
+          <button mat-icon-button class="carousel-nav prev" (click)="prevImage()" aria-label="Previous photo">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button mat-icon-button class="carousel-nav next" (click)="nextImage()" aria-label="Next photo">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
         </div>
-      </div>
+      }
     </div>
-    <div class="row">
-      <div class="col-md-8">
-        <ngb-carousel>
-          @for (image of images; track image) {
-            <ng-template ngbSlide>
-              <div class="wrapper">
-                <img [src]="image.src" alt="Random first slide">
-              </div>
-              <div class="carousel-caption">
-                <h3>{{ image.title }}</h3>
-                <p>{{ image.short }}</p>
-              </div>
-            </ng-template>
-          }
-        </ngb-carousel>
-      </div>
-      <div class="col-md-4">
-        <div class="container text-center">
-          <div class="row row-cols-1 border" >
-            <div class="col border px-auto py-5 fs-4">Rent: Rs {{ property.rent }}</div>
-            <div class="col border px-auto py-5 fs-4">Deposite: Rs {{ property.deposite }}</div>
-            <div class="col border px-auto py-5 fs-5">
-              <!-- <div class="fs-5 mb-2"> -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar2-event" viewBox="0 0 16 16">
-                <path d="M11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"></path>
-                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
-                <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"></path>
-              </svg>
-              {{ property.availableFrom | date }}
-            <!-- </div> -->
-          </div>
-          <div class="col py-4 my-1">
-            <button class="btn btn-primary btn-sm fs-5" type="button" style="width: 100%;" (click)="messageOwner(property.owner_id)">
-              Chat with Owner
-            </button>
-          </div>
+
+    <mat-card class="info-card">
+      <mat-card-content>
+        <div class="info-row">Rent: Rs {{ property.rent }}</div>
+        <div class="info-row">Deposite: Rs {{ property.deposite }}</div>
+        <div class="info-row">
+          <mat-icon>event</mat-icon>
+          {{ property.availableFrom | date }}
         </div>
-      </div>
-    </div>
+        <button mat-flat-button class="full-width" type="button" (click)="messageOwner(property.owner_id)">
+          Chat with Owner
+        </button>
+      </mat-card-content>
+    </mat-card>
   </div>
-  <div class="row mt-3 mx-1">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Amenities</h5>
-        <!-- <p class="card-text"> -->
+
+  <mat-card class="section-card">
+    <mat-card-content>
+      <h5>Amenities</h5>
+      <mat-chip-set>
         @for (item of property.roomAmenities; track item) {
-          <div >
-            <span class=" badge bg-secondary">
-              {{ item }}
-            </span>
-          </div>
+          <mat-chip>{{ item }}</mat-chip>
         }
-      </div>
-    </div>
-  </div>
-  <div class="row mt-3 mx-1">
-    <div class="col-sm-4 card rounded-0">
-      <div class="card-body">
-        <h5 class="card-title">Room Type</h5>
-        <p class="card-text">{{ property.propertyType }}</p>
-      </div>
-    </div>
-    <div class="col-sm-4 card rounded-0">
-      <div class="card-body">
-        <h5 class="card-title">Tenant Type/bhk type</h5>
-        <p class="card-text">{{ property.tenantType }}</p>
-        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-      </div>
-    </div>
-    <div class="col-sm-4 card rounded-0">
-      <div class="card-body">
-        <h5 class="card-title">Rooms Available</h5>
-        <p class="card-text">10</p>
-        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-      </div>
-    </div>
+      </mat-chip-set>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="details-grid">
+    <mat-card>
+      <mat-card-content>
+        <h5>Room Type</h5>
+        <p>{{ property.propertyType }}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <h5>Tenant Type/bhk type</h5>
+        <p>{{ property.tenantType }}</p>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <h5>Rooms Available</h5>
+        <p>10</p>
+      </mat-card-content>
+    </mat-card>
   </div>
 
-  <div class="row mt-3 mx-1">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Rules</h5>
+  <mat-card class="section-card">
+    <mat-card-content>
+      <h5>Rules</h5>
+      <mat-chip-set>
         @for (item of property.rules; track item) {
-          <div >
-            <span class=" badge bg-secondary">
-              {{ item }}
-            </span>
-          </div>
+          <mat-chip>{{ item }}</mat-chip>
         }
-      </div>
-    </div>
-  </div>
+      </mat-chip-set>
+    </mat-card-content>
+  </mat-card>
 
-  <div class="row mt-3 mx-1">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Desc</h5>
-        <p class="card-text">{{ property.desc }}</p>
-      </div>
-    </div>
-  </div>
-</section>
-</div>
+  <mat-card class="section-card">
+    <mat-card-content>
+      <h5>Desc</h5>
+      <p>{{ property.desc }}</p>
+    </mat-card-content>
+  </mat-card>
 
+  <div class="reviews-section">
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="isCollapsed = ! isCollapsed"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="reviewForm"
+      >
+      Post your review
+    </button>
 
-<div class="container">
-  <!-- post review -->
-
-  <div class="row">
-    <div class="col-sm">
-      <button
-        type="button"
-        class="btn btn-outline-primary m-3"
-        (click)="isCollapsed = ! isCollapsed"
-        [attr.aria-expanded]="!isCollapsed"
-        aria-controls="collapseExample"
-        >
-        Post your review
-      </button>
-      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-        <div class="card">
-          <div class="card-body">
-
-            <form   [formGroup]="reviewForm"  (ngSubmit)="onReviewSubmit()" >
-              <div class="form-floating mb-3">
-                <textarea class="form-control" formControlName="comment" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                <label for="floatingTextarea2">Comments</label>
-              </div>
-              <!-- <ngb-rating [(rate)]="currentRate" ></ngb-rating> -->
-              <ngb-rating formControlName="currentRate" ></ngb-rating>
-
-              <button type="submit" class="btn btn-success float-end">POST</button>
-            </form>
-
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!--
-  <ngb-rating [formControl]="ctrl"></ngb-rating>
-  <div class="form-text small">
-    <div *ngIf="ctrl.valid" class="text-success">Thanks!</div>
-    <div *ngIf="ctrl.invalid" class="text-danger">Please rate us</div>
-  </div> -->
-
-  <!-- display average rating -->
-  <div class="row text-center">
-    <div class="col-sm py-3">
-      <h4>Average user rating</h4>
-      <h2 class="bold padding-bottom-7">{{ avgRating }} <small>/ 5</small></h2>
-      <ngb-rating [rate]="avgRating" [readonly]="true" ></ngb-rating>
-    </div>
-
-  </div>
-
-  @for (i of reviews; track i) {
-    <div class="row p-3 border-bottom border-top" >
-      <!-- <div class="row p-3 border-bottom border-top"  *ngFor="let i of rev$ | async"> -->
-      <div class="col-sm">
-        <div class="row" >
-          <div class="col-sm-3">
-            <div class="review-block-name"><a href="#">Anonymous user</a></div>
-            <div class="review-block-date">{{ i.postedOn | date }}<br/>{{ i.postedOn | daysAgo }}</div>
-          </div>
-          <div class="col-sm-9">
-            <div class="review-block-rate">
-              <ngb-rating [rate]="i.rating" [readonly]="true" ></ngb-rating>
+    @if (!isCollapsed) {
+      <mat-card id="reviewForm" class="section-card">
+        <mat-card-content>
+          <form [formGroup]="reviewForm" (ngSubmit)="onReviewSubmit()">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Comments</mat-label>
+              <textarea matInput formControlName="comment" placeholder="Leave a comment here" rows="3"></textarea>
+            </mat-form-field>
+            <app-star-rating formControlName="currentRate"></app-star-rating>
+            <div>
+              <button type="submit" mat-flat-button>POST</button>
             </div>
-            <div class="review-block-title">this was nice in buy</div>
-            <div class="review-block-description">{{ i.comment }}</div>
-          </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    }
+
+    <div class="average-rating">
+      <h4>Average user rating</h4>
+      <h2>{{ avgRating }} <small>/ 5</small></h2>
+      <app-star-rating [rate]="avgRating" [readonly]="true"></app-star-rating>
+    </div>
+
+    @for (i of reviews; track i) {
+      <div class="review-row">
+        <div class="review-meta">
+          <div class="review-block-name">Anonymous user</div>
+          <div class="review-block-date">{{ i.postedOn | date }}<br/>{{ i.postedOn | daysAgo }}</div>
+        </div>
+        <div class="review-body">
+          <app-star-rating [rate]="i.rating" [readonly]="true"></app-star-rating>
+          <div class="review-block-description">{{ i.comment }}</div>
         </div>
       </div>
-    </div>
-  }
-<!-- </section> -->
-</div> <!-- /container -->
+    }
+  </div>
+</div>

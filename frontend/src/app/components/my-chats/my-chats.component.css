@@ -1,43 +1,88 @@
-.outer {
-    height: 450px;
+.full-width {
+    width: 100%;
 }
 
-.inner {
-    height: 450px;
-    overflow-y: scroll;
-    overflow: hidden;
-}
-
-.scroll-content {
-    height: 100%;
-    overflow-y: auto;
-}
-
-.chat-message-left,
-.chat-message-right {
+.chats-layout {
     display: flex;
-    flex-shrink: 0
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.chat-list {
+    flex: 1 1 260px;
+    border-right: 1px solid var(--mat-sys-outline-variant);
+    padding-right: 16px;
+}
+
+.chat-list-item {
+    padding: 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.chat-list-item:hover {
+    background: var(--mat-sys-surface-variant);
+}
+
+.chat-thread {
+    flex: 2 1 400px;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-thread {
+    align-items: center;
+    justify-content: center;
+}
+
+.thread-header {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.thread-messages {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 350px;
+    padding: 16px 0;
+}
+
+.message-row {
+    display: flex;
+    margin-bottom: 12px;
 }
 
 .chat-message-left {
-    margin-right: auto
+    justify-content: flex-start;
 }
 
 .chat-message-right {
-    flex-direction: row-reverse;
-    margin-left: auto
+    justify-content: flex-end;
 }
-.py-3 {
-    padding-top: 1rem!important;
-    padding-bottom: 1rem!important;
+
+.message-bubble {
+    background: var(--mat-sys-surface-variant);
+    border-radius: 8px;
+    padding: 8px 12px;
+    max-width: 70%;
 }
-.px-4 {
-    padding-right: 1.5rem!important;
-    padding-left: 1.5rem!important;
+
+.message-you {
+    font-weight: 500;
+    margin-bottom: 4px;
 }
-.flex-grow-0 {
-    flex-grow: 0!important;
+
+.message-time {
+    font-size: 0.75rem;
+    color: var(--mat-sys-on-surface-variant);
+    margin-top: 4px;
 }
-.border-top {
-    border-top: 1px solid #c3c6c9!important;
+
+.thread-input {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    padding-top: 12px;
 }
