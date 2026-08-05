@@ -1,89 +1,109 @@
 <div class="container">
-    <div class="row">
-        <div class="col-lg-6 mx-auto mt-4 shadow-lg">
-            
-            <div class="card-body p-4">
-                <h1 class="">Please Login</h1>
-                <form 
-                    name="form"
-                    #f="ngForm"
-                    (ngSubmit)="f.form.valid && onSubmit()"
-                    novalidate
-                    >
+  <div class="row">
+    <div class="col-lg-6 mx-auto mt-4 shadow-lg">
 
-                    <div class="mb-3 form-group">
-                        <label for="email" class="form-label">Enter Email</label>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            [(ngModel)]="form.email"
-                            email
-                            #email="ngModel"
-                            name="email" 
-                            required
-                        />
-                        <div class="alert-danger" *ngIf="(email.touched || f.submitted) && email.errors">
-                            <div *ngIf="email.errors?.['required']" >Email is required</div>
-                            <div *ngIf="email.errors?.['email']" > 
-                                Email must be a valid email address
-                            </div>
-                        </div>
-                    </div>
+      <div class="card-body p-4">
+        <h1 class="">Please Login</h1>
+        <form
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+          novalidate
+          >
 
-                    <div class="mb-3 form-group">
-                        <label for="password" class="form-label">Enter Password</label>
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            [(ngModel)] = "form.password"
-                            password
-                            minlength="4"
-                            #password="ngModel"
-                            name="password"
-                            required
-                        />
-                        <div class="alert-danger" *ngIf="password.errors && f.submitted">
-                            <div *ngIf="password.errors?.['required']">Password is required</div>
-                            <div *ngIf="password.errors?.['minlength']">
-                                Password must be at least 4 charecters
-                            </div>
-                        </div>
-                    </div>
+          <div class="mb-3 form-group">
+            <label for="email" class="form-label">Enter Email</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="form.email"
+              email
+              #email="ngModel"
+              name="email"
+              required
+              />
+            @if ((email.touched || f.submitted) && email.errors) {
+              <div class="alert-danger">
+                @if (email.errors?.['required']) {
+                  <div >Email is required</div>
+                }
+                @if (email.errors?.['email']) {
+                  <div >
+                    Email must be a valid email address
+                  </div>
+                }
+              </div>
+            }
+          </div>
 
-                    
-                    <div class="mb-3 form-group">
-                        <label for="role" class="form-label">Select Role</label>
-                        <select 
-                            class="select" 
-                            class="form-control"
-                            [(ngModel)]="form.role"
-                            #role="ngModel"
-                            role
-                            name="role" 
-                            required>
-                            <option value="tenant">tenant</option>
-                            <option value="owner">owner</option>
-                        </select>
-                        <div class="alert-danger" *ngIf="role.errors && f.submitted">
-                            <div *ngIf="role.errors?.['required']">Role is required</div>
-                        </div>
-                    </div>
-                    <!-- <button class="btn fs-5 mt-3" style="border-radius: 36px; background: #f7fe96;" >Signup</button> -->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
+          <div class="mb-3 form-group">
+            <label for="password" class="form-label">Enter Password</label>
+            <input
+              type="password"
+              class="form-control"
+              [(ngModel)] = "form.password"
+              password
+              minlength="4"
+              #password="ngModel"
+              name="password"
+              required
+              />
+            @if (password.errors && f.submitted) {
+              <div class="alert-danger">
+                @if (password.errors?.['required']) {
+                  <div>Password is required</div>
+                }
+                @if (password.errors?.['minlength']) {
+                  <div>
+                    Password must be at least 4 charecters
+                  </div>
+                }
+              </div>
+            }
+          </div>
 
-                    <div class="alert alert-warning" *ngIf="f.submitted && isLoginFailed">
-                        Login failed<br/>{{ errorMessage }}
-                    </div>
 
-                    <div class="alert alert-success" *ngIf="isSuccessful">
-                        Login successful!
-                    </div>
-                    <div class="OR" >Already a user? <a [routerLink]="'/signUp'">SIGNUP</a></div>
-                </form>
+          <div class="mb-3 form-group">
+            <label for="role" class="form-label">Select Role</label>
+            <select
+              class="select"
+              class="form-control"
+              [(ngModel)]="form.role"
+              #role="ngModel"
+              role
+              name="role"
+              required>
+              <option value="tenant">tenant</option>
+              <option value="owner">owner</option>
+            </select>
+            @if (role.errors && f.submitted) {
+              <div class="alert-danger">
+                @if (role.errors?.['required']) {
+                  <div>Role is required</div>
+                }
+              </div>
+            }
+          </div>
+          <!-- <button class="btn fs-5 mt-3" style="border-radius: 36px; background: #f7fe96;" >Signup</button> -->
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+
+          @if (f.submitted && isLoginFailed) {
+            <div class="alert alert-warning">
+              Login failed<br/>{{ errorMessage }}
             </div>
-            
-        </div>
+          }
+
+          @if (isSuccessful) {
+            <div class="alert alert-success">
+              Login successful!
+            </div>
+          }
+          <div class="OR" >Already a user? <a [routerLink]="'/signUp'">SIGNUP</a></div>
+        </form>
+      </div>
+
     </div>
+  </div>
 </div>

@@ -1,125 +1,133 @@
 <div class="container">
-    <div class="row" >
-        <form 
-        name="addp"
-        [formGroup]="myForm"
-        (ngSubmit)="onSubmit()" style="display: flex; flex-direction:column; justify-content: center; align-items: center;"
-        >
-        <h1 class="p-4" >Add porperty details</h1>
-        <div>
-            Provide the details about your place to find a tenant soon
+  <div class="row" >
+    <form
+      name="addp"
+      [formGroup]="myForm"
+      (ngSubmit)="onSubmit()" style="display: flex; flex-direction:column; justify-content: center; align-items: center;"
+      >
+      <h1 class="p-4" >Add porperty details</h1>
+      <div>
+        Provide the details about your place to find a tenant soon
+      </div>
+      <div id="step1" [hidden]="currentStep !== 1" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
+        <div class="form-group m-3">
+          <label class="form-label" class="mx-2">Select Property Type</label><br>
+          <input type="radio" name="propertyType" value="home" formControlName="propertyType">
+          <label for="" class="mx-2">Home</label>
+          <input type="radio" name="propertyType" value="pg" formControlName="propertyType">
+          <label for="">PG/Hostel</label>
         </div>
-            <div id="step1" [hidden]="currentStep !== 1" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
-                <div class="form-group m-3">
-                    <label class="form-label" class="mx-2">Select Property Type</label><br>
-                    <input type="radio" name="propertyType" value="home" formControlName="propertyType">
-                    <label for="" class="mx-2">Home</label>
-                    <input type="radio" name="propertyType" value="pg" formControlName="propertyType">
-                    <label for="">PG/Hostel</label>
-                </div>
-                <div class="form-group col-md-4 m-3">
-                    <label for="name" class="form-label">Enter Name</label>
-                    <input type="text" class="form-control" name="name" formControlName="name">
-                </div>
-                <div class="form-group m-3">
-                    <label for="" class="form-label">
-                        Select the type of rooms available in your PG
-                    </label>
-                    <div style="display: flex; flex-direction: row; gap: 10px;">
-                        <div *ngFor="let option of options; let i=index" >
-                                <input type="checkbox" [value]="option.value" (change)="onCheckboxChange($event)">
-                                {{option.name}}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group col-md-4 m-3">
-                    <label for="rent" class="form-label">Rent for one person</label>
-                    <input type="number" class="form-control" name="rent" formControlName="rent">
-                </div>
-                <div class="form-group col-md-4 m-3">
-                    <label for="deposite" class="form-label">Deposite </label>
-                    <input type="number" class="form-control" name="deposite" formControlName="deposite">
-                </div>
-                <div class="form-group col-md-4 m-3">
-                    <label for="" class="form-label">
-                        Room Amenities
-                    </label>
-                    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
-                        <div *ngFor="let option of roomAmenities; let i=index">
-                                <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeA($event)">
-                                {{option.name}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group col-md-4 m-3">
+          <label for="name" class="form-label">Enter Name</label>
+          <input type="text" class="form-control" name="name" formControlName="name">
+        </div>
+        <div class="form-group m-3">
+          <label for="" class="form-label">
+            Select the type of rooms available in your PG
+          </label>
+          <div style="display: flex; flex-direction: row; gap: 10px;">
+            @for (option of options; track option; let i = $index) {
+              <div >
+                <input type="checkbox" [value]="option.value" (change)="onCheckboxChange($event)">
+                {{option.name}}
+              </div>
+            }
+          </div>
+        </div>
+        <div class="form-group col-md-4 m-3">
+          <label for="rent" class="form-label">Rent for one person</label>
+          <input type="number" class="form-control" name="rent" formControlName="rent">
+        </div>
+        <div class="form-group col-md-4 m-3">
+          <label for="deposite" class="form-label">Deposite </label>
+          <input type="number" class="form-control" name="deposite" formControlName="deposite">
+        </div>
+        <div class="form-group col-md-4 m-3">
+          <label for="" class="form-label">
+            Room Amenities
+          </label>
+          <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
+            @for (option of roomAmenities; track option; let i = $index) {
+              <div>
+                <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeA($event)">
+                {{option.name}}
+              </div>
+            }
+          </div>
+        </div>
+      </div>
 
-            <div id="step2" [hidden]="currentStep !== 2" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
-                <div class="form-group col-md-6 m-3">
-                    <label for="address" class="form-label">Enter Address</label>
-                    <input type="text" class="form-control" name="address" formControlName="address">
-                </div>
-                <div class="form-group col-md-6 m-3">
-                    <label for="landmark" class="form-label">Enter landmark</label>
-                    <input type="text" class="form-control" name="address" formControlName="landmark">
-                </div>
-                <div class="form-group col-md-6 m-3">
-                    <label for="" class="form-label">Place is available for</label><br>
-                    <input type="radio" class="m-3" name="tenantType" value="male" formControlName="tenantType">
-                    <label for="">Male</label>
-                    <input type="radio" class="m-3" name="tenantType" value="female" formControlName="tenantType">
-                    <label for="">Female</label>
-                    <input type="radio" class="m-3" name="tenantType" value="anyone" formControlName="tenantType">
-                    <label for="">Anyone</label>
-                </div>
-                <div class="form-group col-md-6 m-3">
-                    <label for="" class="form-label">
-                        PG rules
-                    </label>
-                    <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
-                        <div *ngFor="let option of rules; let i=index">
-                                <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeR($event)">
-                                {{option.name}}
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group col-md-6 m-3">
-                    <label for="desc" class="form-label">Enter description</label>
-                    <input type="text" class="form-control" name="desc" formControlName="desc">
-                </div>
-            </div>
+      <div id="step2" [hidden]="currentStep !== 2" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
+        <div class="form-group col-md-6 m-3">
+          <label for="address" class="form-label">Enter Address</label>
+          <input type="text" class="form-control" name="address" formControlName="address">
+        </div>
+        <div class="form-group col-md-6 m-3">
+          <label for="landmark" class="form-label">Enter landmark</label>
+          <input type="text" class="form-control" name="address" formControlName="landmark">
+        </div>
+        <div class="form-group col-md-6 m-3">
+          <label for="" class="form-label">Place is available for</label><br>
+          <input type="radio" class="m-3" name="tenantType" value="male" formControlName="tenantType">
+          <label for="">Male</label>
+          <input type="radio" class="m-3" name="tenantType" value="female" formControlName="tenantType">
+          <label for="">Female</label>
+          <input type="radio" class="m-3" name="tenantType" value="anyone" formControlName="tenantType">
+          <label for="">Anyone</label>
+        </div>
+        <div class="form-group col-md-6 m-3">
+          <label for="" class="form-label">
+            PG rules
+          </label>
+          <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px;">
+            @for (option of rules; track option; let i = $index) {
+              <div>
+                <input type="checkbox" [value]="option.value" (change)="onCheckboxChangeR($event)">
+                {{option.name}}
+              </div>
+            }
+          </div>
+        </div>
+        <div class="form-group col-md-6 m-3">
+          <label for="desc" class="form-label">Enter description</label>
+          <input type="text" class="form-control" name="desc" formControlName="desc">
+        </div>
+      </div>
 
-            <div id="step3" [hidden]="currentStep !== 3" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
-                
-                <div class="center">
-                    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" 
-                    (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
-                        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                          Optional custom content that replaces the the entire default content.
-                          <button type="button" (click)="openFileSelector()">Browse Files</button>
-                        </ng-template>
-                    </ngx-file-drop>
-                    <div class="upload-table">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody class="upload-name-style">
-                                <tr *ngFor="let item of files; let i=index">
-                                    <td><strong>{{ item.relativePath }}</strong></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <div id="step3" [hidden]="currentStep !== 3" style="display: flex; flex-direction:column; justify-content: center; align-items: center;">
 
-            </div>
-            <div style="display: flex;">
-                <button type="button" class="btn btn-primary float-start m-4" (click)="prevStep()" [hidden]="currentStep === 1">Previous</button>
-                <button type="button" class="btn btn-primary float-end m-4" (click)="nextStep()" [hidden]="currentStep === 3">Next</button>
-                <button type="submit" class="btn btn-success float-end m-4" [hidden]="currentStep !== 3">Submit</button>
-            </div>
-        </form>
-    </div>
+        <div class="center">
+          <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)"
+            (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+              Optional custom content that replaces the the entire default content.
+              <button type="button" (click)="openFileSelector()">Browse Files</button>
+            </ng-template>
+          </ngx-file-drop>
+          <div class="upload-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody class="upload-name-style">
+                @for (item of files; track item; let i = $index) {
+                  <tr>
+                    <td><strong>{{ item.relativePath }}</strong></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+      <div style="display: flex;">
+        <button type="button" class="btn btn-primary float-start m-4" (click)="prevStep()" [hidden]="currentStep === 1">Previous</button>
+        <button type="button" class="btn btn-primary float-end m-4" (click)="nextStep()" [hidden]="currentStep === 3">Next</button>
+        <button type="submit" class="btn btn-success float-end m-4" [hidden]="currentStep !== 3">Submit</button>
+      </div>
+    </form>
+  </div>
 </div>
