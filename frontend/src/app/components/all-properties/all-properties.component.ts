@@ -6,9 +6,10 @@ import { ChatService } from 'src/app/services/chat.service';
 import { OwnerService } from 'src/app/services/owner.service';
 
 @Component({
-  selector: 'app-all-properties',
-  templateUrl: './all-properties.component.html',
-  styleUrls: ['./all-properties.component.css']
+    selector: 'app-all-properties',
+    templateUrl: './all-properties.component.html',
+    styleUrls: ['./all-properties.component.css'],
+    standalone: false
 })
 export class AllPropertiesComponent implements OnInit{
 

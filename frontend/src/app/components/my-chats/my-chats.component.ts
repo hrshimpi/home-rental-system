@@ -4,9 +4,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
-  selector: 'app-my-chats',
-  templateUrl: './my-chats.component.html',
-  styleUrls: ['./my-chats.component.css']
+    selector: 'app-my-chats',
+    templateUrl: './my-chats.component.html',
+    styleUrls: ['./my-chats.component.css'],
+    standalone: false
 })
 export class MyChatsComponent implements OnInit{
   

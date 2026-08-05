@@ -9,9 +9,10 @@ import { OwnerService } from 'src/app/services/owner.service';
 import { TenantService } from 'src/app/services/tenant.service';
 
 @Component({
-  selector: 'app-property-details',
-  templateUrl: './property-details.component.html',
-  styleUrls: ['./property-details.component.css']
+    selector: 'app-property-details',
+    templateUrl: './property-details.component.html',
+    styleUrls: ['./property-details.component.css'],
+    standalone: false
 })
 
 

@@ -7,7 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 // contains the term (case-insensitive). Used chained multiple times
 // in templates, e.g. `properties | filter:a | filter:b`.
 @Pipe({
-  name: 'filter'
+    name: 'filter',
+    standalone: false
 })
 export class FilterPipe implements PipeTransform {
   transform(items: any[], term: any): any[] {
