@@ -20,8 +20,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
 import { AuthErrorInterceptor } from './interceptors/auth-error.interceptor';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DaysAgoPipe } from './pipes/days-ago.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxFileDropModule } from 'ngx-file-drop';
@@ -42,6 +42,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     AddPropertyComponent,
     PropertyDetailsComponent,
     DaysAgoPipe,
+    FilterPipe,
     MyChatsComponent,
     LandingPageComponent,
   ],
@@ -53,7 +54,6 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     HttpClientModule,
     NgbModule,
     ReactiveFormsModule,
-    Ng2SearchPipeModule,
     NgbRatingModule,
     NgbCollapseModule,
     CommonModule,
