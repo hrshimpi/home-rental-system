@@ -54,14 +54,20 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": { "browserTarget": "hrs-frontend:build:production" },
-            "development": { "browserTarget": "hrs-frontend:build:development" }
+            "production": {
+              "buildTarget": "hrs-frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "hrs-frontend:build:development"
+            }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": { "browserTarget": "hrs-frontend:build" }
+          "options": {
+            "buildTarget": "hrs-frontend:build"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
