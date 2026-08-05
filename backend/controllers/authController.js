@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const Property = require('../models/property')
@@ -39,7 +38,7 @@ module.exports.signUp = async (req, res) => {
     const { role,name,email,password,mobile } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 12);
-        const user = await User.create({
+        await User.create({
             role, name, email, password:hashedPassword, mobile
         });
         res.status(201).send({message:"Signup Successful!"});

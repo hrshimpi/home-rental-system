@@ -25,3 +25,17 @@ module.exports.verifyToken = (req, res, next) => {
         res.status(401).send({ message: 'invalid or expired token' });
     }
 }
+
+// Gap found while writing Day 5's tests: verifyToken only checks that
+// *some* valid token was presented - nothing anywhere checked that its
+// role actually matched the route. A tenant with a valid token could
+// call POST /addProperty/:id and successfully create a property, then
+// "own" it as far as editProperty's ownership check is concerned,
+// despite never being an owner by role. Mount after verifyToken (needs
+// req.user to already be set).
+module.exports.requireRole = (role) => (req, res, next) => {
+    if (!req.user || req.user.role !== role) {
+        return res.status(403).send({ message: 'You do not have permission to perform this action.' });
+    }
+    next();
+}

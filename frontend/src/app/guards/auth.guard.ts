@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard  {
   jwtHelper = new JwtHelperService();
     
     constructor(
@@ -16,14 +15,14 @@ export class AuthGuard implements CanActivate {
     ) { }
     
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot){
+    _route: ActivatedRouteSnapshot,
+    _state: RouterStateSnapshot){
       const token = this.authService.getToken();
 
       // JwtHelperService throws on a malformed token rather than
       // returning a boolean - treat that the same as "not logged in"
       // instead of letting it propagate and break navigation.
-      let isValid = false;
+      let isValid: boolean;
       try {
           isValid = !!token && !this.jwtHelper.isTokenExpired(token);
       } catch {

@@ -5,9 +5,10 @@ import { NgxFileDropEntry,FileSystemFileEntry,FileSystemDirectoryEntry} from 'ng
 import { OwnerService } from 'src/app/services/owner.service';
 
 @Component({
-  selector: 'app-add-property',
-  templateUrl: './add-property.component.html',
-  styleUrls: ['./add-property.component.css']
+    selector: 'app-add-property',
+    templateUrl: './add-property.component.html',
+    styleUrls: ['./add-property.component.css'],
+    standalone: false
 })
 export class AddPropertyComponent {
 

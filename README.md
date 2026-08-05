@@ -2,8 +2,8 @@
 
 A full-stack property rental marketplace connecting property **owners** and **tenants**. Owners list properties with photos, amenities, and house rules; tenants browse listings, leave ratings and reviews, and message owners directly through built-in chat.
 
-![Node](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)
-![Angular](https://img.shields.io/badge/Angular-15-DD0031?logo=angular&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-20.19%2B%20%7C%2022.12%2B%20%7C%2024%2B-339933?logo=node.js&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-4-000000?logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white)
 
@@ -22,9 +22,9 @@ A full-stack property rental marketplace connecting property **owners** and **te
 
 | Layer | Stack |
 |---|---|
-| Frontend | Angular 15, ng-bootstrap, Bootstrap 5, RxJS, ngx-toastr, ngx-file-drop |
+| Frontend | Angular 21, ng-bootstrap, Bootstrap 5, RxJS, ngx-toastr, ngx-file-drop |
 | Backend | Node.js, Express, MongoDB + Mongoose, JWT, Multer (file uploads) |
-| Tooling | Karma/Jasmine (frontend tests), nodemon (backend dev reload) |
+| Tooling | Karma/Jasmine + Jest/Supertest (tests), ESLint (both apps), GitHub Actions (CI), nodemon (backend dev reload) |
 
 ## Architecture
 
@@ -44,9 +44,9 @@ The frontend talks to the backend at a base URL configured in `frontend/src/app/
 
 | Requirement | Notes |
 |---|---|
-| **Node.js** 18+ | LTS recommended |
+| **Node.js** `^20.19.0 \|\| ^22.12.0 \|\| >=24.0.0` | Required by the Angular 21 CLI |
 | **npm** | ships with Node |
-| **MongoDB** | local `mongod` on `127.0.0.1:27017`, or a MongoDB Atlas connection string |
+| **MongoDB** | local `mongod` on `127.0.0.1:27017`, or a MongoDB Atlas connection string — not needed to run the backend test suite, which uses an in-memory MongoDB instance instead |
 
 ### 1. Backend
 
@@ -97,6 +97,22 @@ home-rental-system/
         ├── services/      # AuthService, OwnerService, TenantService, ChatService
         └── guards/         # AuthGuard, OwnerGuard, TenantGuard
 ```
+
+## Testing & CI
+
+```bash
+# Backend — Jest + Supertest against an in-memory MongoDB instance
+cd backend
+npm run lint
+npm test
+
+# Frontend — Karma/Jasmine in headless Chrome
+cd frontend
+npm run lint
+npm run test:ci
+```
+
+Every PR into `main` (and every push to `main`) runs `.github/workflows/ci.yml`: lint + test + `npm audit` for both apps, plus a [gitleaks](https://github.com/gitleaks/gitleaks) secret scan over the full commit history. See [DEV_NOTES.md](DEV_NOTES.md) for why the backend's audit gate is stricter (`--audit-level=high`) than the frontend's (`--audit-level=critical`).
 
 ## API reference
 

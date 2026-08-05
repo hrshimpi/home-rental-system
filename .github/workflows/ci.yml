@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend (lint, test, audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Lint
+        working-directory: backend
+        run: npm run lint
+
+      - name: Test
+        working-directory: backend
+        run: npm test
+
+      # Backend deps have 0 known high/critical vulnerabilities as of Day 5 setup,
+      # so this is a hard gate at the high threshold.
+      - name: Audit (fail on high/critical)
+        working-directory: backend
+        run: npm audit --audit-level=high
+
+  frontend:
+    name: Frontend (lint, test, build, audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Test
+        working-directory: frontend
+        run: npm run test:ci
+
+      - name: Build
+        working-directory: frontend
+        run: npm run build
+
+      # Frontend currently carries 2 high-severity findings with "No fix available",
+      # both confined to dev-only build tooling (undici bundled inside @angular/build,
+      # uuid bundled inside webpack-dev-server's sockjs dependency) — neither ships to
+      # users. Gating at "high" here would permanently red-flag CI on issues we cannot
+      # fix, so the frontend gate is set at "critical" instead. Re-tighten to "high"
+      # once upstream ships fixes; tracked in DEV_NOTES.md.
+      - name: Audit (fail on critical)
+        working-directory: frontend
+        run: npm audit --audit-level=critical
+
+  secret-scan:
+    name: Secret scanning (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

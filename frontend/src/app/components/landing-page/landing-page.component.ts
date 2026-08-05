@@ -1,20 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgbDropdownConfig, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, filter, map, merge } from 'rxjs';
 
 @Component({
-  selector: 'app-landing-page',
-  templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css']
+    selector: 'app-landing-page',
+    templateUrl: './landing-page.component.html',
+    styleUrls: ['./landing-page.component.css'],
+    standalone: false
 })
-export class LandingPageComponent implements OnInit{
+export class LandingPageComponent {
 
   constructor(config: NgbDropdownConfig) {
     config.autoClose = 'outside';
-  }
-
-  ngOnInit(): void {
-    
   }
 
   cities:any =[

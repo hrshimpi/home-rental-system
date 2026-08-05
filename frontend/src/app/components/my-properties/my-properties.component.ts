@@ -5,9 +5,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { OwnerService } from 'src/app/services/owner.service';
 
 @Component({
-  selector: 'app-my-properties',
-  templateUrl: './my-properties.component.html',
-  styleUrls: ['./my-properties.component.css']
+    selector: 'app-my-properties',
+    templateUrl: './my-properties.component.html',
+    styleUrls: ['./my-properties.component.css'],
+    standalone: false
 })
 export class MyPropertiesComponent implements OnInit {
 

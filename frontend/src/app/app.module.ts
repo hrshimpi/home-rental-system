@@ -16,55 +16,49 @@ import { PropertyDetailsComponent } from './components/property-details/property
 import { NgbCollapseModule, NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthTokenInterceptor } from './interceptors/auth-token.interceptor';
 import { AuthErrorInterceptor } from './interceptors/auth-error.interceptor';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DaysAgoPipe } from './pipes/days-ago.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { MyChatsComponent } from './components/my-chats/my-chats.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    AllPropertiesComponent,
-    MyPropertiesComponent,
-    ProfileComponent,
-    PageNotFoundComponent,
-    LoginComponent,
-    SignUpComponent,
-    AddPropertyComponent,
-    PropertyDetailsComponent,
-    DaysAgoPipe,
-    MyChatsComponent,
-    LandingPageComponent,
-  ],
-  imports: [
-    FormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NgbModule,
-    ReactiveFormsModule,
-    Ng2SearchPipeModule,
-    NgbRatingModule,
-    NgbCollapseModule,
-    CommonModule,
-    ToastrModule.forRoot(),
-    NgxFileDropModule
-  ],
-  providers: [
-    AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthErrorInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        AllPropertiesComponent,
+        MyPropertiesComponent,
+        ProfileComponent,
+        PageNotFoundComponent,
+        LoginComponent,
+        SignUpComponent,
+        AddPropertyComponent,
+        PropertyDetailsComponent,
+        DaysAgoPipe,
+        FilterPipe,
+        MyChatsComponent,
+        LandingPageComponent,
+    ],
+    bootstrap: [AppComponent], imports: [FormsModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        NgbModule,
+        ReactiveFormsModule,
+        NgbRatingModule,
+        NgbCollapseModule,
+        CommonModule,
+        ToastrModule.forRoot(),
+        NgxFileDropModule], providers: [
+        AuthGuard,
+        { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthErrorInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }

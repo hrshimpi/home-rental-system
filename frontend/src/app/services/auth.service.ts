@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -48,7 +48,7 @@ export class AuthService {
     }, httpOptions );
   }
 
-  signUp(email:string, password:string, name:string, mobile:Number ,role:string):Observable<any> {
+  signUp(email:string, password:string, name:string, mobile:number ,role:string):Observable<any> {
     return this.http.post( AUTH_API + 'signUp', {
         email, password, name, mobile, role
     }, httpOptions);

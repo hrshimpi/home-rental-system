@@ -86,7 +86,6 @@ module.exports.getChatListbyUserId = async (req, res) => {
 }
 
 module.exports.getChatById = async (req, res) => {
-  const userId = req.params.userId;
   const chatId = req.params.chatId;
   try {
     const chats = await Message.find({"chatId":chatId});
