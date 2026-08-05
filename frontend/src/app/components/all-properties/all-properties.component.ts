@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
 import { OwnerService } from 'src/app/services/owner.service';
 
@@ -22,11 +21,7 @@ export class AllPropertiesComponent implements OnInit{
     private ownerService: OwnerService,
     private authService: AuthService,
     private router: Router,
-    private modalService: NgbModal
   ) {}
-
-  ownerID!:string;
-  selectedItemID!:string;
 
   ngOnInit():void {
     this.userId = this.authService.getId().id;
@@ -39,14 +34,9 @@ export class AllPropertiesComponent implements OnInit{
         }
       )
   }
-  
-  navigate(id:string){
-    this.router.navigate(['/propertyDetails', id ]);  
-  }
 
-  openModal(id: string): void {
-    this.selectedItemID = id;
-    // this.ownerID = this.properties.owner_id;
+  navigate(id:string){
+    this.router.navigate(['/propertyDetails', id ]);
   }
 
 }
