@@ -1,0 +1,13 @@
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+}
+
+.star {
+  color: var(--mat-sys-primary);
+  cursor: pointer;
+}
+
+.star-rating.readonly .star {
+  cursor: default;
+}

@@ -1,0 +1,12 @@
+<span class="star-rating" [class.readonly]="readonly">
+  @for (star of stars; track star) {
+    <mat-icon
+      class="star"
+      (click)="select(star)"
+      (keyup.enter)="select(star)"
+      [tabindex]="readonly ? -1 : 0"
+      [attr.role]="readonly ? null : 'button'"
+      [attr.aria-label]="readonly ? null : star + ' star' + (star > 1 ? 's' : '')"
+      >{{ star <= rate ? 'star' : 'star_border' }}</mat-icon>
+  }
+</span>
