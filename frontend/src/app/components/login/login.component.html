@@ -1,109 +1,86 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-6 mx-auto mt-4 shadow-lg">
+<div class="page-narrow">
+  <mat-card>
+    <mat-card-content>
+      <h1>Please Login</h1>
+      <form
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && onSubmit()"
+        novalidate
+        class="auth-form"
+        >
 
-      <div class="card-body p-4">
-        <h1 class="">Please Login</h1>
-        <form
-          name="form"
-          #f="ngForm"
-          (ngSubmit)="f.form.valid && onSubmit()"
-          novalidate
-          >
-
-          <div class="mb-3 form-group">
-            <label for="email" class="form-label">Enter Email</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="form.email"
-              email
-              #email="ngModel"
-              name="email"
-              required
-              />
-            @if ((email.touched || f.submitted) && email.errors) {
-              <div class="alert-danger">
-                @if (email.errors?.['required']) {
-                  <div >Email is required</div>
-                }
-                @if (email.errors?.['email']) {
-                  <div >
-                    Email must be a valid email address
-                  </div>
-                }
-              </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Email</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="form.email"
+            email
+            #email="ngModel"
+            name="email"
+            required
+            />
+          @if ((email.touched || f.submitted) && email.errors) {
+            @if (email.errors?.['required']) {
+              <mat-error>Email is required</mat-error>
             }
-          </div>
-
-          <div class="mb-3 form-group">
-            <label for="password" class="form-label">Enter Password</label>
-            <input
-              type="password"
-              class="form-control"
-              [(ngModel)] = "form.password"
-              password
-              minlength="4"
-              #password="ngModel"
-              name="password"
-              required
-              />
-            @if (password.errors && f.submitted) {
-              <div class="alert-danger">
-                @if (password.errors?.['required']) {
-                  <div>Password is required</div>
-                }
-                @if (password.errors?.['minlength']) {
-                  <div>
-                    Password must be at least 4 charecters
-                  </div>
-                }
-              </div>
+            @if (email.errors?.['email']) {
+              <mat-error>Email must be a valid email address</mat-error>
             }
-          </div>
-
-
-          <div class="mb-3 form-group">
-            <label for="role" class="form-label">Select Role</label>
-            <select
-              class="select"
-              class="form-control"
-              [(ngModel)]="form.role"
-              #role="ngModel"
-              role
-              name="role"
-              required>
-              <option value="tenant">tenant</option>
-              <option value="owner">owner</option>
-            </select>
-            @if (role.errors && f.submitted) {
-              <div class="alert-danger">
-                @if (role.errors?.['required']) {
-                  <div>Role is required</div>
-                }
-              </div>
-            }
-          </div>
-          <!-- <button class="btn fs-5 mt-3" style="border-radius: 36px; background: #f7fe96;" >Signup</button> -->
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Login</button>
-          </div>
-
-          @if (f.submitted && isLoginFailed) {
-            <div class="alert alert-warning">
-              Login failed<br/>{{ errorMessage }}
-            </div>
           }
+        </mat-form-field>
 
-          @if (isSuccessful) {
-            <div class="alert alert-success">
-              Login successful!
-            </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter Password</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)] = "form.password"
+            password
+            minlength="4"
+            #password="ngModel"
+            name="password"
+            required
+            />
+          @if (password.errors && f.submitted) {
+            @if (password.errors?.['required']) {
+              <mat-error>Password is required</mat-error>
+            }
+            @if (password.errors?.['minlength']) {
+              <mat-error>Password must be at least 4 charecters</mat-error>
+            }
           }
-          <div class="OR" >Already a user? <a [routerLink]="'/signUp'">SIGNUP</a></div>
-        </form>
-      </div>
+        </mat-form-field>
 
-    </div>
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Select Role</mat-label>
+          <mat-select
+            [(ngModel)]="form.role"
+            #role="ngModel"
+            name="role"
+            required>
+            <mat-option value="tenant">tenant</mat-option>
+            <mat-option value="owner">owner</mat-option>
+          </mat-select>
+          @if (role.errors && f.submitted) {
+            @if (role.errors?.['required']) {
+              <mat-error>Role is required</mat-error>
+            }
+          }
+        </mat-form-field>
+
+        <button mat-flat-button type="submit">Login</button>
+
+        @if (f.submitted && isLoginFailed) {
+          <p class="form-message error">Login failed<br/>{{ errorMessage }}</p>
+        }
+
+        @if (isSuccessful) {
+          <p class="form-message success">Login successful!</p>
+        }
+        <p>Already a user? <a [routerLink]="'/signUp'">SIGNUP</a></p>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

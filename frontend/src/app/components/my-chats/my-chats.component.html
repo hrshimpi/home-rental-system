@@ -1,81 +1,60 @@
-<main class="content">
-  <div class="container p-0">
+<main class="page chats-page">
+  <h1>Messages</h1>
 
-    <h1 class="h3 mb-3">Messages</h1>
+  <mat-card>
+    <mat-card-content class="chats-layout">
+      <div class="chat-list">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Search...</mat-label>
+          <input matInput type="text">
+        </mat-form-field>
 
-    <div class="card">
-      <div class="row g-0">
-        <div class="col-12 col-lg-5 col-xl-3 border">
-
-          <div class="px-4 d-none d-md-block">
-            <div class="d-flex align-items-center">
-              <div class="flex-grow-1">
-                <input type="text" class="form-control my-3" placeholder="Search...">
-              </div>
-            </div>
-          </div>
-          <!-- loop -->
-          @for (item of chatList; track item) {
-            <div (click)="openChatById(item._id, item.RecieverData[0].name)" (keyup.enter)="openChatById(item._id, item.RecieverData[0].name)" tabindex="0" role="button" routerLinkActive="router-link-active"  class="list-group-item list-group-item-action border-0">
-              <div class="d-flex align-items-start" >
-                <div class="flex-grow-1 ml-3 p-4 border-bottom border-top">
-                  {{item.RecieverData[0].name}}
-                </div>
-              </div>
-            </div>
-          }
-          <!-- loop -->
-
-          <hr class="d-block d-lg-none mt-1 mb-0">
-        </div>
-
-        @if (!currentChatId) {
-          <div class="col-12 col-lg-7 col-xl-9" style="height: 450px; display: flex; justify-content: center; align-items: center;">
-            Please select any chat!
-          </div>
-        }
-        @if (currentChatId) {
-          <div class="col-12 col-lg-7 col-xl-9 outer" style="height: auto;">
-            <div class="py-2 px-4 border-bottom d-none d-lg-block">
-              <div class="d-flex align-items-center py-1">
-                <div class="flex-grow-1 pl-3">
-                  <strong>{{recieverName}}</strong>
-                </div>
-                <div>
-                  <button class="btn btn-light border btn-lg px-3"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal feather-lg"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg></button>
-                </div>
-              </div>
-            </div>
-            <div class="position-relative inner" #container>
-              @for (i of chats; track i) {
-                <div class="p-4 scroll-content">
-                  <!-- loop -->
-                  @for (i of chats; track i) {
-                    <div class="pb-4 item" [ngClass]="{'chat-message-left': id !== i.sender , 'chat-message-right': id === i.sender  }" >
-                      <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                        @if (id === i.sender) {
-                          <div class="font-weight-bold mb-1">You</div>
-                        }
-                        {{i.text}}
-                        <div class="text-muted small text-nowrap mt-2">{{i.createdAt | date:'d/MM/YYYY, h:mm a'}}</div>
-                      </div>
-                    </div>
-                  }
-                  <!-- loop -->
-                </div>
-              }
-            </div>
-            <div class="flex-grow-0 py-3 px-4 border-top">
-              <form (ngSubmit)="onSend()">
-                <div class="input-group">
-                  <input type="text" name="message" class="form-control" [(ngModel)]="message" placeholder="Type your message">
-                  <button class="btn btn-primary">Send</button>
-                </div>
-              </form>
-            </div>
+        @for (item of chatList; track item) {
+          <div
+            (click)="openChatById(item._id, item.RecieverData[0].name)"
+            (keyup.enter)="openChatById(item._id, item.RecieverData[0].name)"
+            tabindex="0"
+            role="button"
+            routerLinkActive="router-link-active"
+            class="chat-list-item"
+            >
+            {{ item.RecieverData[0].name }}
           </div>
         }
       </div>
-    </div>
-  </div>
+
+      @if (!currentChatId) {
+        <div class="chat-thread empty-thread">
+          Please select any chat!
+        </div>
+      }
+      @if (currentChatId) {
+        <div class="chat-thread">
+          <div class="thread-header">
+            <strong>{{ recieverName }}</strong>
+          </div>
+          <div class="thread-messages" #container>
+            @for (i of chats; track i) {
+              <div class="message-row" [ngClass]="{'chat-message-left': id !== i.sender , 'chat-message-right': id === i.sender }">
+                <div class="message-bubble">
+                  @if (id === i.sender) {
+                    <div class="message-you">You</div>
+                  }
+                  {{ i.text }}
+                  <div class="message-time">{{ i.createdAt | date:'d/MM/YYYY, h:mm a' }}</div>
+                </div>
+              </div>
+            }
+          </div>
+          <form (ngSubmit)="onSend()" class="thread-input">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Type your message</mat-label>
+              <input matInput type="text" name="message" [(ngModel)]="message">
+            </mat-form-field>
+            <button mat-flat-button type="submit">Send</button>
+          </form>
+        </div>
+      }
+    </mat-card-content>
+  </mat-card>
 </main>

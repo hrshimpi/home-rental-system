@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbCarouselConfig, NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { OwnerService } from 'src/app/services/owner.service';
@@ -22,10 +21,19 @@ export class PropertyDetailsComponent implements OnInit{
     {title: '', short: '', src: "https://www.hostelworld.com/blog/wp-content/uploads/2018/06/Hostel-room-types-Freehand-Los-Angeles.jpg"},
     {title: '', short: '', src: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aG9zdGVsfGVufDB8fDB8fHww&w=1000&q=80"}
   ];
-  
+  currentImageIndex = 0;
+
+  nextImage(): void {
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+  }
+
+  prevImage(): void {
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+  }
+
   property:any = {};
   reviews:any[] = [];
-  
+
   reviewPosted: EventEmitter<void> = new EventEmitter<void>();
   // rev$: Observable<any>;
 
@@ -34,23 +42,14 @@ export class PropertyDetailsComponent implements OnInit{
   public p_id:string ='';
   // reviewForm:FormGroup
   constructor(
-    config: NgbCarouselConfig,
     private ownerServices: OwnerService,
     private tenantService:TenantService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private chatService: ChatService,
     private router: Router,
-    configR: NgbRatingConfig,
     private fb:FormBuilder,
   ) {
-    // config.interval = 2000;
-    // config.pauseOnHover = false;
-    config.keyboard = false;    //carousel
-    //static rating
-    configR.max = 5;
-		// configR.readonly = true;
-    
     this.p_id = this.route.snapshot.params['id'];
     // this.rev$ = this.tenantService.getAllReviewByID(this.p_id);
   }

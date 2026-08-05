@@ -1,15 +1,16 @@
 
-<div class="container">
+<div class="page">
   @if (user !== undefined) {
-    <div class="row">
-      <h2>Profile</h2>
-      <h2>
-        <a [routerLink]="['/my-chats', user._id]" routerLinkActive="router-link-active" >My chats</a>
-      </h2>
-      <br>
-        <h5>Name:  {{ user.name }}</h5>
-        <h5>Email: {{ user.email }}</h5>
-        <h5>Mobile:{{ user.mobile }}</h5>
-      </div>
-    }
-  </div>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Profile</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><a [routerLink]="['/my-chats', user._id]" routerLinkActive="router-link-active">My chats</a></p>
+        <p>Name: {{ user.name }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Mobile: {{ user.mobile }}</p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

@@ -13,7 +13,6 @@ import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { PropertyDetailsComponent } from './components/property-details/property-details.component';
-import { NgbCollapseModule, NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -23,10 +22,25 @@ import { AuthErrorInterceptor } from './interceptors/auth-error.interceptor';
 import { DaysAgoPipe } from './pipes/days-ago.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 import { CommonModule } from '@angular/common';
-import { ToastrModule } from 'ngx-toastr';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { MyChatsComponent } from './components/my-chats/my-chats.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { OwnerContactDialogComponent } from './components/owner-contact-dialog/owner-contact-dialog.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -44,18 +58,30 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
         FilterPipe,
         MyChatsComponent,
         LandingPageComponent,
+        StarRatingComponent,
+        OwnerContactDialogComponent,
     ],
     bootstrap: [AppComponent], imports: [FormsModule,
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
-        NgbModule,
         ReactiveFormsModule,
-        NgbRatingModule,
-        NgbCollapseModule,
         CommonModule,
-        ToastrModule.forRoot(),
-        NgxFileDropModule], providers: [
+        NgxFileDropModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatCardModule,
+        MatChipsModule,
+        MatSnackBarModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatListModule], providers: [
         AuthGuard,
         { provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: AuthErrorInterceptor, multi: true },

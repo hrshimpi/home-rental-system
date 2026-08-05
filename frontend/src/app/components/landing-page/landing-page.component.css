@@ -1,3 +1,24 @@
-.ngb-typeahead-window  {
-    width: 300px !important;
+.search-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.type-toggle {
+    display: flex;
+    gap: 16px;
+}
+
+.landmark-field {
+    max-width: 400px;
+}
+
+.search-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.search-row mat-form-field {
+    flex: 1 1 220px;
 }
