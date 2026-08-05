@@ -1,4 +1,18 @@
-.container{
-    margin-bottom: 0;
-    /* background: #e6effc; */
+.app-footer {
+    padding: 24px 16px;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+.footer-copy {
+    color: var(--mat-sys-on-surface-variant);
+    margin: 0;
 }

@@ -8,8 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
     standalone: false
 })
 export class HeaderComponent implements OnInit{
-  isMenuCollapsed = true;
-  
   role:string = '';
   id:string = '';
   
